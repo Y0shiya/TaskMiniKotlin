@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/tasksFragment">
+
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.jobstheoretica.tasksview.views.TasksFragment"
+        android:label="fragment_tasks"
+        tools:layout="@layout/fragment_tasks">
+        <action
+            android:id="@+id/tasksToTaskWriter"
+            app:destination="@id/taskWriterFragment"/>
+        <action
+            android:id="@+id/tasksToTaskEditor"
+            app:destination="@id/taskEditorFragment"/>
+        <action
+            android:id="@+id/tasksToTrash"
+            app:destination="@+id/trashFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/taskWriterFragment"
+        android:name="com.jobstheoretica.taskwriterview.views.TaskWriterFragment"
+        android:label="fragment_task_writer"
+        tools:layout="@layout/fragment_task_writer">
+    </fragment>
+
+    <fragment
+        android:id="@+id/taskEditorFragment"
+        android:name="com.jobstheoretica.taskwriterview.views.TaskWriterFragment"
+        android:label="fragment_task_editor"
+        tools:layout="@layout/fragment_task_writer">
+    </fragment>
+
+    <fragment
+        android:id="@+id/trashFragment"
+        android:name="com.jobstheoretica.trashview.views.TrashFragment"
+        android:label="fragment_trash"
+        tools:layout="@layout/fragment_trash">
+    </fragment>
+
+</navigation>

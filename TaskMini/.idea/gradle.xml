@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/behavior" />
+            <option value="$PROJECT_DIR$/command" />
+            <option value="$PROJECT_DIR$/di" />
+            <option value="$PROJECT_DIR$/entity" />
+            <option value="$PROJECT_DIR$/model" />
+            <option value="$PROJECT_DIR$/navigation" />
+            <option value="$PROJECT_DIR$/realmdao" />
+            <option value="$PROJECT_DIR$/restdao" />
+            <option value="$PROJECT_DIR$/tasksview" />
+            <option value="$PROJECT_DIR$/taskwriterview" />
+            <option value="$PROJECT_DIR$/trashview" />
+            <option value="$PROJECT_DIR$/utility" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

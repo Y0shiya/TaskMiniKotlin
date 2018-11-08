@@ -1,0 +1,1 @@
+include ':app', ':tasksview', ':model', ':realmdao', ':di', ':taskwriterview', ':model', ':entity', ':navigation', ':behavior', ':command', ':utility', ':trashview', ':restdao'
