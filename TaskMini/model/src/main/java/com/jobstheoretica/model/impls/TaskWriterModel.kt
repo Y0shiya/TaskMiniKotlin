@@ -27,7 +27,7 @@ internal class TaskWriterModel:ITaskWriterModel {
         if(id != null){
             _isNew = false
 
-            //既存アカウント 取得
+            //既存タスク 取得
             val task = myDao.read(id, Task::class)
             if(task != null){
                 _taskLiveData.postValue(task)
@@ -42,7 +42,7 @@ internal class TaskWriterModel:ITaskWriterModel {
         else{
             _isNew = true
 
-            //新規アカウント 取得
+            //新規タスク 生成
             val dummyId = UUID.randomUUID().toString()
             val newTask = Task(dummyId, "")
             _taskLiveData.postValue(newTask)
