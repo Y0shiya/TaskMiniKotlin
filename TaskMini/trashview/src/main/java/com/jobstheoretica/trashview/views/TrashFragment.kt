@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import com.example.navigation.factories.SharedNavigatorFactory
 import com.example.navigation.interfaces.INavigator
 import com.example.utility.impls.ActivityReflector
@@ -90,6 +91,10 @@ class TrashFragment : Fragment() {
                 trash.clear()
                 trash.addAll(it.toTypedArray())
                 adpt.notifyDataSetChanged()
+
+                if(it.count() == 0){
+                    Toast.makeText(this.context, "Nothing trash...", Toast.LENGTH_SHORT).show()
+                }
             }
         })
 

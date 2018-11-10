@@ -41,12 +41,7 @@ internal class DoubleClickOnTask(itemView:View, fragmentActivity: TasksFragment,
         )
     }
 
-    protected override fun subUpdateViewState() {
-
-    }
-
-    protected override fun subEventToCommand() {
-
+    override fun subBehave() {
         if(!this.unCheckedBoxView.hasOnClickListeners()){
             this.unCheckedBoxView.setOnClickListener {
                 if(!this.hasDoubleClicked(it))

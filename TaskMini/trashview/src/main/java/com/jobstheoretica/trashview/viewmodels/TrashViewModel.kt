@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import com.example.command.impls.Command
 import com.example.command.interfaces.ICommand
+import com.jobstheoretica.entity.bindable.Messenger
 import com.jobstheoretica.entity.bindable.Trash
 import com.jobstheoretica.model.dependencies.Dependency
 import com.jobstheoretica.model.interfaces.ITrashModel
@@ -16,6 +17,9 @@ internal class TrashViewModel:ViewModel() {
 
     val trashLiveData:LiveData<List<Trash>>
         get() = this.myModel.trashLiveData
+
+    val messengerLiveData:LiveData<Messenger>
+        get() = this.myModel.messengerLiveData
 
     val readTrashCommand:ICommand<Unit?> = Command(execute = {_ -> this.readTrash()})
 

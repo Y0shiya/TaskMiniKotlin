@@ -2,6 +2,7 @@ package com.jobstheoretica.model.impls
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import com.jobstheoretica.entity.bindable.Messenger
 import com.jobstheoretica.entity.bindable.Task
 import com.jobstheoretica.entity.bindable.Trash
 import com.jobstheoretica.model.interfaces.ITrashModel
@@ -27,12 +28,14 @@ internal class TrashModel:ITrashModel {
     override val trashLiveData: LiveData<List<Trash>>
         get() = this._trashLiveData
 
+    private val _messengerLiveData = MutableLiveData<Messenger>()
+    override val messengerLiveData: LiveData<Messenger>
+        get() = this._messengerLiveData
+
     override suspend fun readTrashAsync(): Deferred<Unit> = async(parent = this.parentJob) {
 
         val trash = myDao.read(Trash::class)
-        if(trash != null){
-            _trashLiveData.postValue(trash)
-        }
+        _trashLiveData.postValue(trash)
     }
 
     override suspend fun revertTrashAsync(trash: Trash): Deferred<Unit> = async(parent = this.parentJob) {

@@ -1,6 +1,8 @@
 package com.jobstheoretica.restdao.impls
 
 import android.app.Notification
+import android.util.Log
+import java.net.SocketTimeoutException;
 import com.google.gson.GsonBuilder
 import com.jobstheoretica.entity.bindable.Task
 import com.jobstheoretica.entity.bindable.Trash
@@ -10,6 +12,8 @@ import com.jobstheoretica.restdao.interfaces.ITrashApiService
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
+import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.javaField
@@ -29,6 +33,8 @@ internal class RestDao:IDao {
     private val NO_CONTENT = 204
     private val BAD_REQUEST = 400
     private val INTERNAL_SERVERT_ERROR = 500
+
+    private val TAG_DAO_ERROR = "DaoError"
 
     override fun <E : Any> create(entity: E) {
         var call:Call<E>? = null
@@ -50,11 +56,16 @@ internal class RestDao:IDao {
         }
 
         if(call != null){
-            val response = call.execute()
-            if(response.code() == this.CREATED){
-            }
-            else{
-
+            try{
+                val response = call.execute()
+                if(response.code() == this.CREATED){
+                }
+            }catch (ex:SocketTimeoutException){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
+            }catch (ex:Exception){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
             }
         }
     }
@@ -75,11 +86,20 @@ internal class RestDao:IDao {
         var entities = mutableListOf<E>()
 
         if(call != null){
-            val response = call.execute()
-            if((response.code() == this.OK)
-                    && (response.body() != null)){
-                entities.addAll(response.body()!!)
+            try{
+                val response = call.execute()
+                if((response.code() == this.OK)
+                        && (response.body() != null)){
+                    entities.addAll(response.body()!!)
+                }
+            }catch (ex:SocketTimeoutException){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
+            }catch (ex:Exception){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
             }
+
         }
 
         return entities
@@ -95,13 +115,20 @@ internal class RestDao:IDao {
         }
 
         if(call != null){
-            val response = call.execute()
+            try{
+                val response = call.execute()
 
-            if((response.code() == this.OK)
-                    && (response.body() != null)){
-                return response.body()!!
+                if((response.code() == this.OK)
+                        && (response.body() != null)){
+                    return response.body()!!
+                }
+            }catch (ex:SocketTimeoutException){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
             }
-            else{
+            catch (ex:Exception){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
             }
         }
 
@@ -116,9 +143,18 @@ internal class RestDao:IDao {
         }
 
         if(call != null){
-            val response = call.execute()
-            if(response.code() == this.NO_CONTENT){
+            try{
+                val response = call.execute()
+                if(response.code() == this.NO_CONTENT){
 
+                }
+            }
+            catch (ex:SocketTimeoutException){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
+            }catch (ex:Exception){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
             }
         }
     }
@@ -133,9 +169,17 @@ internal class RestDao:IDao {
         }
 
         if(call != null){
-            val response = call.execute()
-            if(response.code() == this.NO_CONTENT){
+            try{
+                val response = call.execute()
+                if(response.code() == this.NO_CONTENT){
 
+                }
+            }catch (ex:SocketTimeoutException){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
+            }catch (ex:Exception){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
             }
         }
     }
@@ -159,9 +203,18 @@ internal class RestDao:IDao {
         }
 
         if(call != null){
-            val response = call.execute()
-            if(response.code() == this.NO_CONTENT){
+            try{
+                val response = call.execute()
+                if(response.code() == this.NO_CONTENT){
 
+                }
+            }catch (ex:SocketTimeoutException){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
+            }
+            catch (ex:Exception){
+                Log.d(this.TAG_DAO_ERROR, ex.message)
+                Log.d(this.TAG_DAO_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString() }.toString())
             }
         }
     }

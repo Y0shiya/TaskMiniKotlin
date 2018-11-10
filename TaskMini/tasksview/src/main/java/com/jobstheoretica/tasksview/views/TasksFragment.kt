@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.navigation.factories.SharedNavigatorFactory
 import com.example.navigation.interfaces.INavigator
+import com.jobstheoretica.entity.bindable.Messenger
 import com.jobstheoretica.entity.bindable.Task
 
 import com.jobstheoretica.tasksview.R
@@ -66,7 +67,7 @@ public class TasksFragment : Fragment() {
         val rv = view.findViewById<RecyclerView>(R.id.tasksRecyclerView)
         val tasks = mutableListOf<com.jobstheoretica.entity.bindable.Task>()
 
-        val adpt = TasksAdapter(this, vm, tasks)
+        val adpt = TasksAdapter(this, fragmentAccountsBinding.tasksViewModel as TasksViewModel, tasks)
         rv.setHasFixedSize(false)
         rv.layoutManager = LinearLayoutManager(this.context)
         rv.adapter = adpt
@@ -78,24 +79,19 @@ public class TasksFragment : Fragment() {
                 adpt.list.addAll(it.toTypedArray())
                 adpt.notifyDataSetChanged()
 
+                if(it.count() == 0){
+                    Toast.makeText(this.context, "Nothing tasks....", Toast.LENGTH_SHORT).show()
+                }
             }
         })
 
         vm.readTasksCommand.execute(null)
 
-        //for debug
-        vm.debugViewModelMsgLiveData.observe(this, Observer {
-            if(it != null){
-                Toast.makeText(this.context, it, Toast.LENGTH_SHORT).show()
-            }
-        })
-        vm.debugModelMsgLiveData.observe(this, Observer {
-            if(it != null){
-                Toast.makeText(this.context, it, Toast.LENGTH_SHORT).show()
-            }
-        })
-
         return fragmentAccountsBinding.root
+    }
+
+    private fun foo(msg:String){
+        Toast.makeText(this.context, msg, Toast.LENGTH_SHORT).show()
     }
 
     // TODO: Rename method, update argument and hook method into UI event

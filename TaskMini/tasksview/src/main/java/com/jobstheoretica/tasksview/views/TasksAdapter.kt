@@ -29,8 +29,7 @@ internal class TasksAdapter(tasksFragment: TasksFragment, viewModel: TasksViewMo
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): TaskViewHolder {
         val viewItem = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_task, viewGroup, false)
-        DoubleClickOnTask(viewItem, this.tasksFragment, this.viewModel).eventToCommand()
-        //ClickVertMenuViewOnTask(viewItem, this, this.tasksFragment, this.viewModel).eventToCommand().updateViewState()
+        DoubleClickOnTask(viewItem, this.tasksFragment, this.viewModel).behave()
         return TaskViewHolder(viewItem)
     }
 

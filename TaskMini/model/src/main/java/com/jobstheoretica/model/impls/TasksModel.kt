@@ -32,15 +32,9 @@ internal class TasksModel:ITasksModel {
     override val messengerLiveData: LiveData<Messenger>
         get() = this._messengerLiveData
 
-    private val _debugModelMsgLiveData = MutableLiveData<String>()
-    override val debugModelMsgLiveData:LiveData<String>
-        get() = this._debugModelMsgLiveData
-
     override suspend fun readTasksAsync(condition: String?): Deferred<Unit> = async(parent = this.parentJob) {
         val tasks = myDao.read(Task::class)
-        if(tasks != null){
-            _tasksLiveData.postValue(tasks)
-        }
+        _tasksLiveData.postValue(tasks)
     }
 
     override suspend fun removeTaskAsync(id: String): Deferred<Unit> = async(parent = this.parentJob) {

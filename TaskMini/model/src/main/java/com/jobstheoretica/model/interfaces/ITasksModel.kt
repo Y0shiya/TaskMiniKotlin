@@ -17,8 +17,6 @@ public interface ITasksModel {
 
     val messengerLiveData:LiveData<Messenger>
 
-    val debugModelMsgLiveData:LiveData<String>
-
     suspend fun readTasksAsync(condition:String?):Deferred<Unit>
 
     suspend fun removeTaskAsync(id:String):Deferred<Unit>

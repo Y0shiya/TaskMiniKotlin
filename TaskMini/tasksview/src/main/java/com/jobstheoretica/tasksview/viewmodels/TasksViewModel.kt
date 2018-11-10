@@ -22,14 +22,13 @@ internal class TasksViewModel:ViewModel() {
 
     private val _taskLiveData = MutableLiveData<Task>()
     val taskLiveData:LiveData<Task>
-        get(){
-            return this.myModel.taskLiveData
-        }
+        get() = this.myModel.taskLiveData
 
     val tasksLiveData:LiveData<List<Task>>
-        get(){
-            return this.myModel.tasksLiveData
-        }
+        get() = this.myModel.tasksLiveData
+
+    val messengerLiveData:LiveData<Messenger>
+        get() = this.myModel.messengerLiveData
 
     private val _removeTaskLiveData = MutableLiveData<String>()
     val removeTaskLiveData:LiveData<String>
@@ -41,18 +40,8 @@ internal class TasksViewModel:ViewModel() {
     val removeTaskCommand:ICommand<String> =
             Command(execute = {id -> this.remove(id)})
 
-    private val _debugMsgLiveData = MutableLiveData<String>()
-    val debugViewModelMsgLiveData:LiveData<String>
-        get() = this._debugMsgLiveData
-
-    val debugModelMsgLiveData:LiveData<String>
-        get() = this.myModel.debugModelMsgLiveData
-
-    val messengerLiveData:LiveData<Messenger>
-        get() = this.myModel.messengerLiveData
-
     private fun read(condition: String?){
-        launch(context = UI, parent = this.myModel.parentJob) {
+        launch(parent = this.myModel.parentJob) {
             myModel.readTasksAsync(condition).await()
         }
     }

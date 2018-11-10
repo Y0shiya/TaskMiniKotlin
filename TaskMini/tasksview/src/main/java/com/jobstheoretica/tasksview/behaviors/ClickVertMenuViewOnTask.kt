@@ -33,24 +33,7 @@ internal class ClickVertMenuViewOnTask(itemView: View, rvAdpt: TasksAdapter, tas
         this.rv = this.tasksFragment.view!!.findViewById(R.id.tasksRecyclerView)
     }
 
-    override fun subUpdateViewState() {
-        /*if(this.viewModel.removeTaskLiveData.hasObservers())
-           return
-
-        this.viewModel.removeTaskLiveData.observe(this.tasksFragment.viewLifecycleOwner, Observer {
-            val id = it
-            if(id != null){
-                val removeTask = this.rvAdpt.list.singleOrNull{ task -> task.id  == id }
-                if(removeTask != null){
-                    val tempIndex = this.rvAdpt.list.indexOf(removeTask)
-                    this.rvAdpt.list.remove(removeTask)
-                    this.rvAdpt.notifyItemRemoved(tempIndex)
-                }
-            }
-        })*/
-    }
-
-    override fun subEventToCommand() {
+    override fun subBehave() {
         this.vertMenuViewOnCd.setOnClickListener {
             val popUpMenu = PopupMenu(this.tasksFragment.context, this.vertMenuViewOnCd)
             popUpMenu.menu.add("Edit")
