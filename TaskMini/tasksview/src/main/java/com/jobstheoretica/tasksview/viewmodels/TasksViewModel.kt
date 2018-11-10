@@ -53,14 +53,14 @@ internal class TasksViewModel:ViewModel() {
 
     private fun read(condition: String?){
         launch(context = UI, parent = this.myModel.parentJob) {
-            myModel.readAsync(condition).await()
+            myModel.readTasksAsync(condition).await()
         }
     }
 
     private fun remove(id:String){
         _removeTaskLiveData.value = id
         launch (context = UI, parent = this.myModel.parentJob) {
-            myModel.removeAsync(id).await()
+            myModel.removeTaskAsync(id).await()
         }
     }
 

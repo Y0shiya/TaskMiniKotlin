@@ -36,14 +36,14 @@ internal class TasksModel:ITasksModel {
     override val debugModelMsgLiveData:LiveData<String>
         get() = this._debugModelMsgLiveData
 
-    override suspend fun readAsync(condition: String?): Deferred<Unit> = async(parent = this.parentJob) {
+    override suspend fun readTasksAsync(condition: String?): Deferred<Unit> = async(parent = this.parentJob) {
         val tasks = myDao.read(Task::class)
         if(tasks != null){
             _tasksLiveData.postValue(tasks)
         }
     }
 
-    override suspend fun removeAsync(id: String): Deferred<Unit> = async(parent = this.parentJob) {
+    override suspend fun removeTaskAsync(id: String): Deferred<Unit> = async(parent = this.parentJob) {
         val task = myDao.read(Task::class).singleOrNull{
             it.id == id
         }
