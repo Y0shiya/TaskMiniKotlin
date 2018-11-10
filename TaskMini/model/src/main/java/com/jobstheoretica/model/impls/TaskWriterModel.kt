@@ -32,12 +32,6 @@ internal class TaskWriterModel:ITaskWriterModel {
             if(task != null){
                 _taskLiveData.postValue(task)
             }
-            /*for(task in myDao.read(Task::class)){
-                if(task.id == id){
-                    _taskLiveData.postValue(task)
-                    break
-                }
-            }*/
         }
         else{
             _isNew = true
