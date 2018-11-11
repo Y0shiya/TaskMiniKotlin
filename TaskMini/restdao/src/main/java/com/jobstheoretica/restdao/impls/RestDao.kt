@@ -9,6 +9,8 @@ import com.jobstheoretica.entity.bindable.Trash
 import com.jobstheoretica.restdao.interfaces.IDao
 import com.jobstheoretica.restdao.interfaces.ITaskApiService
 import com.jobstheoretica.restdao.interfaces.ITrashApiService
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,11 +24,9 @@ internal class RestDao:IDao {
 
     //private val baseUrl:String = "http://10.0.2.2/TaskMiniBackend/"
     private val baseUrl:String = "http://10.0.2.2:49751/"
-
-    private val retrofit = Retrofit.Builder()
-            .baseUrl(this.baseUrl)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build()
+    private val logger:HttpLoggingInterceptor
+    private val httpClient:OkHttpClient
+    private val retrofit:Retrofit
 
     private val OK = 200
     private val CREATED = 201
@@ -35,6 +35,28 @@ internal class RestDao:IDao {
     private val INTERNAL_SERVERT_ERROR = 500
 
     private val TAG_DAO_ERROR = "DaoError"
+    private val TAG_HTTP_LOGGER = "HttpLogger"
+
+    init {
+        this.logger = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
+            if(it != null){
+                Log.d(TAG_HTTP_LOGGER, it)
+            }
+        })
+        this.logger.level = HttpLoggingInterceptor.Level.BODY
+
+        this.httpClient = OkHttpClient()
+                .newBuilder()
+                .addInterceptor(this.logger)
+                .build()
+
+        this.retrofit = Retrofit
+                .Builder()
+                .baseUrl(this.baseUrl)
+                .client(this.httpClient)
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+                .build()
+    }
 
     override fun <E : Any> create(entity: E) {
         var call:Call<E>? = null
