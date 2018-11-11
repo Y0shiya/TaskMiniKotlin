@@ -40,6 +40,10 @@ internal class ClickVertMenuViewOnTask(itemView: View, rvAdpt: TasksAdapter, tas
             popUpMenu.menu.add("Remove")
 
             popUpMenu.setOnMenuItemClickListener {
+                if(this.viewModel.cancelJobCommand.canExecute(null)){
+                    this.viewModel.cancelJobCommand.execute(null)
+                }
+
                 when(it.title){
                     "Edit" -> {
                         val id = this.idView.text.toString()

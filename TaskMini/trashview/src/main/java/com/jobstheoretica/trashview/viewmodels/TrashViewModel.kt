@@ -9,6 +9,7 @@ import com.jobstheoretica.entity.bindable.Trash
 import com.jobstheoretica.model.dependencies.Dependency
 import com.jobstheoretica.model.interfaces.ITrashModel
 import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.cancelAndJoin
 import kotlinx.coroutines.experimental.launch
 
 internal class TrashViewModel:ViewModel() {
@@ -21,11 +22,22 @@ internal class TrashViewModel:ViewModel() {
     val messengerLiveData:LiveData<Messenger>
         get() = this.myModel.messengerLiveData
 
+    val cancelJobCommand:ICommand<Unit> =
+            Command(execute = { _ -> this.cancelJob()}
+                    , canExecute = { _ -> this.canCancelJob()})
+
     val readTrashCommand:ICommand<Unit?> = Command(execute = {_ -> this.readTrash()})
 
     val revertTrashCommand:ICommand<Trash> = Command(execute = {trash -> this.revertTrash(trash)})
 
     val deleteCommand:ICommand<Trash?> = Command(execute = {trash -> this.deleteTrash(trash)})
+
+    private fun canCancelJob():Boolean{
+        return !this.myModel.parentJob.isCompleted
+    }
+    private fun cancelJob(){
+        this.myModel.parentJob.cancel()
+    }
 
     private fun readTrash(){
         launch(context = UI, parent = this.myModel.parentJob) {

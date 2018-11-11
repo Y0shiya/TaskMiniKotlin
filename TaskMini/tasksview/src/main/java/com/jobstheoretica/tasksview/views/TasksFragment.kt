@@ -11,13 +11,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import com.example.navigation.factories.SharedNavigatorFactory
 import com.example.navigation.interfaces.INavigator
+import com.example.utility.impls.ActivityReflector
 import com.jobstheoretica.entity.bindable.Messenger
 import com.jobstheoretica.entity.bindable.Task
 
 import com.jobstheoretica.tasksview.R
+import com.jobstheoretica.tasksview.behaviors.ClickVertMenuViewOnTask
+import com.jobstheoretica.tasksview.behaviors.ClickVertMenuViewOnTasksHeader
 import com.jobstheoretica.tasksview.databinding.FragmentTasksBinding
 import com.jobstheoretica.tasksview.viewmodels.TasksViewModel
 
@@ -50,6 +54,13 @@ public class TasksFragment : Fragment() {
     }
 
     internal var sharedNavigator:INavigator? = null
+    internal var vertMenuVewOnTasksHeader:ImageView? = null
+        get() {
+            if(field  == null){
+                field = ActivityReflector<ImageView>(this.activity!!).getDeclaredField("vertMenuVewOnTasksHeader")
+            }
+            return field
+        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -71,6 +82,9 @@ public class TasksFragment : Fragment() {
         rv.setHasFixedSize(false)
         rv.layoutManager = LinearLayoutManager(this.context)
         rv.adapter = adpt
+
+        ClickVertMenuViewOnTasksHeader(this.sharedNavigator!!, this.vertMenuVewOnTasksHeader!!, this, fragmentAccountsBinding)
+                .behave()
 
         vm.tasksLiveData.observe(this, Observer {
             if(it != null){

@@ -2,6 +2,7 @@ package com.jobstheoretica.model.impls
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.util.Log
 import com.jobstheoretica.entity.bindable.Messenger
 import com.jobstheoretica.entity.bindable.Task
 import com.jobstheoretica.entity.bindable.Trash
@@ -10,6 +11,7 @@ import com.jobstheoretica.model.interfaces.ITrashModel
 //import com.jobstheoretica.realmdao.interfaces.IDao
 import com.jobstheoretica.restdao.dependencies.Dependency
 import com.jobstheoretica.restdao.interfaces.IDao
+import kotlinx.coroutines.experimental.CancellationException
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.async
@@ -19,6 +21,8 @@ import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.javaField
 
 internal class TrashModel:ITrashModel {
+
+    private val TAG_MODEL_ERROR = "ModelError"
 
     private val myDao = Dependency(IDao::class).inject()
 
@@ -33,9 +37,16 @@ internal class TrashModel:ITrashModel {
         get() = this._messengerLiveData
 
     override suspend fun readTrashAsync(): Deferred<Unit> = async(parent = this.parentJob) {
-
-        val trash = myDao.read(Trash::class)
-        _trashLiveData.postValue(trash)
+        //val trash = myDao.read(Trash::class)
+        //_trashLiveData.postValue(trash)
+        try{
+            val trash = myDao.read(Trash::class)
+            _trashLiveData.postValue(trash)
+        }catch (ex:CancellationException){
+            Log.d(TAG_MODEL_ERROR, ex.message)
+            Log.d(TAG_MODEL_ERROR, ex.stackTrace.map { it -> "\n at " + it.toString()  }.toString())
+        }
+        return@async
     }
 
     override suspend fun revertTrashAsync(trash: Trash): Deferred<Unit> = async(parent = this.parentJob) {

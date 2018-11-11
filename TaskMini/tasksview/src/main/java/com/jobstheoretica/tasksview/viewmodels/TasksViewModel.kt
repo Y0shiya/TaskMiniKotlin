@@ -34,19 +34,23 @@ internal class TasksViewModel:ViewModel() {
     val removeTaskLiveData:LiveData<String>
         get() = this._removeTaskLiveData
 
+    val cancelJobCommand:ICommand<Unit?> =
+            Command(execute = { _ -> this.myModel.cancelJob()}
+                    , canExecute = { _ -> this.myModel.canCancelJob()})
+
     val readTasksCommand:ICommand<String?> =
-            Command(execute = {condition -> this.read(condition)})
+            Command(execute = {condition -> this.readTasks(condition)})
 
     val removeTaskCommand:ICommand<String> =
-            Command(execute = {id -> this.remove(id)})
+            Command(execute = {id -> this.removeTask(id)})
 
-    private fun read(condition: String?){
+    private fun readTasks(condition: String?){
         launch(parent = this.myModel.parentJob) {
             myModel.readTasksAsync(condition).await()
         }
     }
 
-    private fun remove(id:String){
+    private fun removeTask(id:String){
         _removeTaskLiveData.value = id
         launch (context = UI, parent = this.myModel.parentJob) {
             myModel.removeTaskAsync(id).await()
@@ -55,6 +59,8 @@ internal class TasksViewModel:ViewModel() {
 
     protected override fun onCleared() {
         super.onCleared()
-        this.myModel.parentJob.cancel()
+        if(this.myModel.canCancelJob()){
+            this.myModel.cancelJob()
+        }
     }
 }

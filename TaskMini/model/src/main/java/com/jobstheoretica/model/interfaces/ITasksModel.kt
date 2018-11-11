@@ -17,6 +17,10 @@ public interface ITasksModel {
 
     val messengerLiveData:LiveData<Messenger>
 
+    fun canCancelJob():Boolean
+
+    fun cancelJob():Unit
+
     suspend fun readTasksAsync(condition:String?):Deferred<Unit>
 
     suspend fun removeTaskAsync(id:String):Deferred<Unit>

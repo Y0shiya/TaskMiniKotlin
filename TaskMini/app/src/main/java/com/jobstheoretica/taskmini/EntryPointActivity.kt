@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import com.example.navigation.factories.NavigatorFactory
 import com.example.navigation.interfaces.INavigator
 import com.jobstheoretica.taskmini.behaviors.ClickCommonBackArrowView
-import com.jobstheoretica.taskmini.behaviors.ClickVertMenuViewOnTasksHeader
 import com.jobstheoretica.tasksview.views.TasksFragment
 import com.jobstheoretica.taskwriterview.views.TaskWriterFragment
 import com.jobstheoretica.trashview.views.TrashFragment
@@ -21,7 +20,10 @@ class EntryPointActivity : AppCompatActivity(), TasksFragment.OnFragmentInteract
 
     private var navController:NavController? = null
 
-    private val kvOfViews:Map<String, Int> = mapOf("TaskEditor" to R.id.tasksToTaskEditor)
+    private val kvOfViews:Map<String, Int> = mapOf(
+            "TaskEditor" to R.id.tasksToTaskEditor
+            , "TaskWriter" to R.id.tasksToTaskWriter
+            , "Trash" to R.id.tasksToTrash)
 
     private var navigator:INavigator? = null
 
@@ -104,7 +106,6 @@ class EntryPointActivity : AppCompatActivity(), TasksFragment.OnFragmentInteract
         }
         this.navigator = NavigatorFactory(this.navController!!, this.kvOfViews).create()
 
-        ClickVertMenuViewOnTasksHeader(this, this.navController!!).updateViewState()
         ClickCommonBackArrowView(this, this.navController!!).updateViewState()
     }
 
