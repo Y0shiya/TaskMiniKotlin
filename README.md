@@ -21,3 +21,8 @@
 * Activity/Fragmentのイベントリスナーを定義し、Commandパターンを通じてViewModelに処理を依頼。結果を、ViewModelが公開しているLiveDataで受け取る。(LiveData.observe)
 
 ### commandモジュール
+* Xamarin.FormsやWPFなどのMVVMアプリの世界で利用されているCommandパターンを導入。
+* View層からViewModel層への処理依頼を、「処理が実行可能か？(canExecute)」、「処理実行(execute)」の二通りに抽象化したもの。
+* view系モジュール/viewmodelsパッケージ配下のViewModelクラスで実装する。
+
+### diモジュール
