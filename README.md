@@ -46,7 +46,7 @@
 * 実装クラスは、Implsパッケージ配下に作成する。※Impls = Implementsの略。
 * 実装クラスのアクセスレベルは、モジュール外部からの直接参照を禁止するためinternalとする。
 * dependenciesパッケージ配下にあるDependencyクラスを通じて依存性注入し、実装クラスの機能を呼び出す。
-* ViewModelに公開するメソッドのシグニチャは原則的に次の項目を満たすよう作成。suspendであること/特定の戻り値を返さないFuture/PromiseなDeferred<Unit>であること/await可能であること/AsyncAwaitなメソッドであることを呼び出し元に知らせるため、メソッド名の末尾をAsyncとすること/呼び出し元から処理キャンセル可能な親Jobをコンテキストに設定すること。
+* ViewModelに公開するメソッドのシグニチャは原則的に次の項目を満たすよう作成。suspendであること/特定の戻り値を返さないFuturePromiseなDeferred(Unit)であること/await可能であること/AsyncAwaitなメソッドであることを呼び出し元に知らせるため、メソッド名の末尾をAsyncとすること/呼び出し元から処理キャンセル可能な親Jobをコンテキストに設定すること。
 * Modelの処理結果は、メソッドの戻り値として返すのではなく、LiveData/MutableLiveData.postValueを通じて返す。行きと戻りの処理の単一方向性を確保する意図。
 
 ### navigationモジュール
