@@ -15,3 +15,9 @@
 * 遷移処理によりFragmentが切り替わったタイミングで、EntryPointActivity.Toobar上の画面項目の可視制御を行っている。Navigationのイベントリスナー内で可視制御を記述。
 
 ### behaviorモジュール
+* FatActivity/FatFragment対策のために作成されたモジュール。
+* 当モジュールで決められた仕様を継承するBehavior実装クラスに、画面の処理記述を移譲する。
+* 実装クラスは、view系モジュールのbehaviorsパッケージ配下に作成する。
+* Activity/Fragmentのイベントリスナーを定義し、Commandパターンを通じてViewModelに処理を依頼。結果を、ViewModelが公開しているLiveDataで受け取る。(LiveData.observe)
+
+### commandモジュール
