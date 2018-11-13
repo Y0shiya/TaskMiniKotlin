@@ -31,3 +31,8 @@
 * model/restdao/realmdaoモジュール機能の呼び出し元で、利用。
 
 ### entityモジュール
+* 未完タスクをTaskクラス、完了済みタスクをTrashクラスとして扱う。
+* 双方向DataBindingの利用を想定しているため、BaseObservableを継承。
+* Gsonライブラリにより、Jsonシリアライズ/デシリアライズ処理をする際にも当モジュールのエンティティを利用。
+
+### modelモジュール
