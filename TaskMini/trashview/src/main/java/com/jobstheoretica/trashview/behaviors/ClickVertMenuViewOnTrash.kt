@@ -33,7 +33,7 @@ internal class ClickVertMenuViewOnTrash(itemView: View
 
     override fun subBehave() {
         this.vertMenuView.setOnClickListener {
-            val popUpMenu = PopupMenu(this.trashFragment.context, this.itemView)
+            val popUpMenu = PopupMenu(this.trashFragment.context, this.vertMenuView)
             popUpMenu.menu.add("Revert")
             popUpMenu.menu.add("Delete")
 
