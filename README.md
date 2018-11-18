@@ -1,5 +1,7 @@
 # TaskMiniKotlin
 
+![TaskMiniDemo](https://raw.github.com/wiki/Y0shiya/TaskMiniKotlin/images/TaskMiniCap.gif)
+
 ### appモジュール
 * アプリケーションのエントリーポイント
 * 当TaskMiniアプリで唯一稼働するActivity(=EntryPointActivity)を持つ。
