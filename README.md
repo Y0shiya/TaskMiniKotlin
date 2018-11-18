@@ -50,7 +50,9 @@
 * Modelの処理結果は、メソッドの戻り値として返すのではなく、LiveData/MutableLiveData.postValueを通じて返す。行きと戻りの処理の単一方向性を確保する意図。
 
 ### navigationモジュール
-* 概要説明追加予定
+* AAC Navigation(NavController)のラッパーモジュール。
+* 親Activity(EntryPointActivity)で生成した遷移管理機能を、画面詳細の子Fragment(TasksFragment/TaskWriterFragment/TrashFragment)からリフレクションアクセスし共有利用するための機能を提供する。
+* 子Fragmentにラッパーモジュールを通じて遷移処理させることにより、AACのNavigationライブラリへの明示的な依存をappモジュールのみに限定させている。
 
 ### realmdaoモジュール
 * 概要説明追加予定
