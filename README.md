@@ -22,7 +22,7 @@
 * MVVMパターン上のView層に位置づけられると認識。
 
 ### commandモジュール
-* Xamarin.FormsやWPFなどのMVVMアプリの世界で利用されているCommandパターンを導入。
+* Xamarin.FormsやWPFなどのMVVMアプリの世界で利用されているCommandパターンの簡易版を導入。
 * View層からViewModel層への処理依頼を、「処理が実行可能か？(canExecute)」、「処理実行(execute)」の二通りに抽象化したもの。
 * view系モジュール/viewmodelsパッケージ配下のViewModelクラスで実装する。
 
@@ -43,7 +43,7 @@
 * インターフェースは、interfacesパッケージ配下に作成する。
 * インターフェースのアクセスレベルは、public。
 * 実装クラスの命名規約は、〇〇Model。※〇〇は、要件名。
-* 実装クラスは、Implsパッケージ配下に作成する。※Impls = Implementsの略。
+* 実装クラスは、implsパッケージ配下に作成する。※impls = Implementsの略。
 * 実装クラスのアクセスレベルは、モジュール外部からの直接参照を禁止するためinternalとする。
 * dependenciesパッケージ配下にあるDependencyクラスを通じて依存性注入し、実装クラスの機能を呼び出す。
 * ViewModelに公開するメソッドのシグニチャは原則的に次の項目を満たすよう作成。suspendであること/特定の戻り値を返さないFuturePromiseなDeferred(Unit)であること/await可能であること/AsyncAwaitなメソッドであることを呼び出し元に知らせるため、メソッド名の末尾をAsyncとすること/呼び出し元から処理キャンセル可能な親Jobをコンテキストに設定すること。
@@ -59,29 +59,41 @@
 * バックエンドを実装するまでの間、暫定的にデータ永続化の動作確認をアプリ側だけで行えるよう作成利用したモジュール。
 * SQLを記述せずに、一貫してひとつの言語(Kotlin)で、永続化処理まで書けるためRealmを採用。
 * IDaoインタフェース(DAO/CRUDパターン)を通じて、Model層(modelモジュール)に実処理(RealmDao)を提供。
+* DAO詳細機能への直接参照を禁止するため、RealmDaoはinternalとしている。
 * dependenciesパッケージ配下にあるDependencyクラスを通じて依存性注入する。
 * ジェネリクス/リフレクションプログラミングにより、エンティティクラスとRealm管理下データ(RealmObject)のマッピング処理を抽象化しており、ベタ書きによるマッピング処理を排除している。
 
 ### restdaoモジュール
 * REST Web APIに対するデータの読み書きを、DAO/CRUDパターンでラップしたモジュール。
 * IDaoインタフェースを通じて、実処理(RestDao)を提供する。
+* DAO詳細機能への直接参照を禁止するため、RestDaoはinternalとしている。
 * Retrofit2/OKHttp/Gsonライブラリを利用。
 * Dao/createメソッドを、HTTP/POSTメソッドに対応させている。
-* Dao/readメソッドを、HTTP/GETメソッドに対応付させている。
+* Dao/readメソッドを、HTTP/GETメソッドに対応させている。
 * Dao/updateメソッドを、HTTP/PUTメソッドに対応させている。
 * Dao/deleteメソッドを、HTTP/DELETEメソッドに対応させている。
+* OKHttp/HttpLoggingInterceptorにより、Logcatへの通信ログ出力を設定している。
 * Gsonにより、エンティティクラスからJsonへのシリアライズ処理を行っている。
 * Gsonにより、Jsonからエンティティクラスへのデシリアライズ処理を行っている。
 * 当モジュールからの問い合わせは、WebAPI/TaskMiniBackendプロジェクト/Controllersフォルダ配下のコントローラークラスにルーティングされる。
 
 ### tasksviewモジュール
-* 概要説明追加予定
+* 未完了タスク一覧を表示するためのviewモジュール。
+* MVVM上のView層とViewModel層、Behavior実装から構成されている。
+* EntryPointActivity/TasksFragment(View層) ⇔ TasksViewModel(ViewModel層) ⇔ ITasksModel/TasksModel(Model層) ⇔ IDao/RestDao(永続化層)。
+* TasksFragmentは、EntryPointActivityが持つAAC.NavControllerによる遷移管理下にある。
+* 詳細用Fragmentの命名規約を、〇〇Fragmentとしている。※〇〇は、要件名。
+* ViewModelの命名規約を、〇〇ViewModelとしている。※〇〇は、要件名。
 
 ### taskwriterviewモジュール
-* 概要説明追加予定
+* 未完了タスクを新規登録、編集登録するためのviewモジュール。
+* EntryPointActivity/TaskWriterFragment(View層) ⇔ TaskWriterViewModel(ViewModel層) ⇔ ITaskWriterModel/TaskWriterModel(Model層) ⇔ IDao/RestDao(永続化層)
 
 ### trashviewモジュール
-* 概要説明追加予定
+* 完了済みタスク一覧を表示するためのviewモジュール。
+* 完了済みタスクを、未完了タスク一覧に戻すRevert機能を持つ。
+* 完了済みタスクを、個別or全件完全削除するDelete/Delete all機能を持つ。
+* EntryPointActivity/TrashFragment(View層) ⇔ TrashViewModel(ViewModel層) ⇔ ITrashModel/TrashModel(Model層) ⇔ IDao/RestDao(永続化層)
 
 ### utilityモジュール
-* 概要説明追加予定
+* 各モジュールで、頻繁利用する共通処理が、作成配置されるモジュール。
