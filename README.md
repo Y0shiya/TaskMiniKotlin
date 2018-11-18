@@ -3,7 +3,7 @@
 ![TaskMiniDemo](https://raw.github.com/wiki/Y0shiya/TaskMiniKotlin/images/TaskMiniCap.gif)
 
 ### マテリアルデザイン アイコン
-![Icons - Material Design](https://material.io/tools/icons/?style=outline)
+[Icons - Material Design](https://material.io/tools/icons/?style=outline)
 
 ### appモジュール
 * アプリケーションのエントリーポイント
