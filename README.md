@@ -46,7 +46,7 @@
 * 実装クラスは、implsパッケージ配下に作成する。※impls = Implementsの略。
 * 実装クラスのアクセスレベルは、モジュール外部からの直接参照を禁止するためinternalとする。
 * dependenciesパッケージ配下にあるDependencyクラスを通じて依存性注入し、実装クラスの機能を呼び出す。
-* ViewModelに公開するメソッドのシグニチャは原則的に次の項目を満たすよう作成。suspendであること/特定の戻り値を返さないFuturePromiseなDeferred(Unit)であること/await可能であること/AsyncAwaitなメソッドであることを呼び出し元に知らせるため、メソッド名の末尾をAsyncとすること/呼び出し元から処理キャンセル可能な親Jobをコンテキストに設定すること。
+* ViewModelに公開するメソッドのシグニチャは原則的に次の項目を満たすよう作成。suspendであること/戻り値がFutureなDeferred(Unit)であること(メソッドごとにバラバラな固有の戻り値を返さない)/await可能であること/AsyncAwaitなメソッドであることを呼び出し元に知らせるため、メソッド名の末尾をAsyncとすること/呼び出し元から処理キャンセル可能な親Jobをコンテキストに設定すること。
 * Modelの処理結果は、メソッドの戻り値として返すのではなく、LiveData/MutableLiveData.postValueを通じて返す。行きと戻りの処理の単一方向性を確保する意図。
 
 ### navigationモジュール
@@ -84,6 +84,8 @@
 * TasksFragmentは、EntryPointActivityが持つAAC.NavControllerによる遷移管理下にある。
 * 詳細用Fragmentの命名規約を、〇〇Fragmentとしている。※〇〇は、要件名。
 * ViewModelの命名規約を、〇〇ViewModelとしている。※〇〇は、要件名。
+* TasksFragmentからTasksViewModelへの処理依頼は原則的に、Commandを通じて行われる。処理結果は、TasksViewModelが公開しているLiveDataを通じて受け取る。
+* TasksViewModelからTasksModelへの処理依頼は原則的に、Async/Awaitメソッドを通じて行われる。処理結果は、TasksModelが公開しているLiveDataを通じて受け取る。
 
 ### taskwriterviewモジュール
 * 未完了タスクを新規登録、編集登録するためのviewモジュール。
@@ -96,4 +98,4 @@
 * EntryPointActivity/TrashFragment(View層) ⇔ TrashViewModel(ViewModel層) ⇔ ITrashModel/TrashModel(Model層) ⇔ IDao/RestDao(永続化層)
 
 ### utilityモジュール
-* 各モジュールで、頻繁利用する共通処理が、作成配置されるモジュール。
+* 各モジュールで、頻繁利用する共通処理を、作成配置するモジュール。
